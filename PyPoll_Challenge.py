@@ -23,13 +23,13 @@ candidate_votes = {}
 # 1: Create a county list and county votes dictionary.
 county_votes = {}
 county_list = []
-     
+
 # Track the winning candidate, vote count and percentage
 winning_county = ""
 winning_candidate=""
 winning_count = 0
 winning_percentage = 0
-
+winning_count_candidate = 0
 # 2: Track the largest county and county voter turnout.
 largest_county = ""
 largest_county_count = 0
@@ -103,7 +103,7 @@ with open(file_to_save, "w") as txt_file:
         vote_percentage = float(county_votes_count) / float(total_votes)*100
 
         # 6d: Print the county results to the terminal.
-        county_results=(f"{county_name}:{vote_percentage}%({county_votes_count})\n")
+        county_results=(f"{county_name}:{vote_percentage:.1f}%({county_votes_count:,})\n")
         print(county_results)
         # 6e: Save the county votes to a text file.
         txt_file.write(county_results)
@@ -116,7 +116,7 @@ with open(file_to_save, "w") as txt_file:
     # 7: Print the county with the largest turnout to the terminal.
     largest_county=(
         f"--------------\n" 
-        f" Largest county turnout:{winning_county}\n" 
+        f"Largest county turnout: {winning_county}\n" 
         f"-----------------\n")
     print(largest_county)
 
@@ -139,8 +139,8 @@ with open(file_to_save, "w") as txt_file:
         txt_file.write(candidate_results)
 
         # Determine winning vote count, winning percentage, and candidate.
-        if (votes > winning_count) and (vote_percentage > winning_percentage):
-            winning_count = votes
+        if (votes > winning_count_candidate) and (vote_percentage > winning_percentage):
+            winning_count_candidate = votes
             winning_candidate = candidate_name
             winning_percentage = vote_percentage
 
@@ -148,7 +148,7 @@ with open(file_to_save, "w") as txt_file:
     winning_candidate_summary = (
         f"-------------------------\n"
         f"Winner: {winning_candidate}\n"
-        f"Winning Vote Count: {winning_count:,}\n"
+        f"Winning Vote Count: {winning_count_candidate:,}\n"
         f"Winning Percentage: {winning_percentage:.1f}%\n"
         f"-------------------------\n")
     print(winning_candidate_summary)
